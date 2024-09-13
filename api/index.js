@@ -22,3 +22,15 @@ app.use(express.json());
 
  app.use('/api/user', userRoutes);
  app.use('/api/auth', authRoutes);
+
+
+ //MiddleWare...
+ app.use((req, res, err, next) => {
+   const statusCode = err.statusCode || 500;
+   const message = err.message || 'InternalServer Error';
+   return res.status(statusCode).json({
+      success: false,
+      statusCode,
+      message,
+   });
+ }); 
