@@ -12,6 +12,9 @@ import {
   updateUserStart,
   updateUserSuccess,
   updateUserFailure,
+  deleteUserFailure,
+  deleteUserStart,
+  deleteUserSuccess,
 } from "../redux/user/userSlice.js";
 import { useDispatch } from "react-redux";
 
@@ -62,6 +65,7 @@ function Profile() {
     );
   };
 
+  // For Update user...
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.id]: e.target.value });
   };
@@ -79,7 +83,7 @@ function Profile() {
       });
       const data = await res.json();
       if (data.success === false) {
-        dispatch(updateUserFailure(error.message));
+        dispatch(updateUserFailure(data.message));
         return;
       }
 
@@ -87,6 +91,25 @@ function Profile() {
       setUpdateSuccess(true);
     } catch (error) {
       dispatch(updateUserFailure(error.message));
+    }
+  };
+
+  // For delete user...
+  const handleDeleteUser = async () => {
+    try {
+      dispatch(deleteUserStart());
+      const res = await fetch(`/api/user/delete/${currentUser._id}`, {
+        method: 'DELETE'
+      });
+      const data = await res.json();
+      if (data.success === false) {
+        dispatch(deleteUserFailure(data.message));
+        return;
+      }
+      dispatch(deleteUserSuccess(data));
+
+    } catch (error) {
+      dispatch(deleteUserFailure(error.message));
     }
   };
 
@@ -159,7 +182,7 @@ function Profile() {
         </button>
       </form>
       <div className="flex justify-between mt-5">
-        <span className="text-red-700 cursor-pointer">Delete account</span>
+        <span onClick={handleDeleteUser} className="text-red-700 cursor-pointer">Delete account</span>
         <span className="text-red-700 cursor-pointer">Sign out</span>
       </div>
 
