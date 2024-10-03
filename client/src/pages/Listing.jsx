@@ -13,7 +13,7 @@ import {
   FaParking,
   FaShare,
 } from "react-icons/fa";
-//   import Contact from '../components/Contact';
+  import Contact from '../components/Contact';
 
 // https://sabe.io/blog/javascript-format-numbers-commas#:~:text=The%20best%20way%20to%20format,format%20the%20number%20with%20commas.
 
@@ -24,7 +24,7 @@ export default function Listing() {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(false);
   const [copied, setCopied] = useState(false);
-  //   const [contact, setContact] = useState(false);
+    const [contact, setContact] = useState(false);
 
   const { currentUser } = useSelector((state) => state.user);
 
@@ -104,7 +104,7 @@ export default function Listing() {
               <FaMapMarkerAlt className="text-green-700" />
               {listing.address}
             </p>
-
+            
             <div className="flex gap-4">
               <p className="bg-red-900 w-full max-w-[200px] text-white text-center p-1 rounded-md">
                 {listing.type === "rent" ? "For Rent" : "For Sale"}
@@ -143,7 +143,16 @@ export default function Listing() {
                 {listing.furnished ? "Furnished" : "Unfurnished"}
               </li>
             </ul>
-           </div>
+            {currentUser && listing.userRef !== currentUser._id && !contact && (
+              <button
+                onClick={() => setContact(true)}
+                className="bg-slate-700 text-white rounded-lg uppercase hover:opacity-95 p-3"
+              >
+                Contact landlord
+              </button>
+            )}
+            {contact && <Contact listing={listing} />}
+          </div>
         </div>
       )}
     </main>
