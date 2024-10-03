@@ -350,6 +350,7 @@ function UpdateListing() {
               accept="image/*"
               multiple
             />
+            {/* button for upload */}
             <button
             type="button"
               disabled={uploading}
@@ -374,6 +375,8 @@ function UpdateListing() {
                   alt="listing image"
                   className="w-20 h-20 object-cover rounded-lg"
                 />
+
+                {/* button for delete */}
                 <button
                   type="button"
                   onClick={() => handleRemoveImage(index)}
@@ -384,6 +387,8 @@ function UpdateListing() {
                 </button>
               </div>;
             })}
+
+            {/* button for update */}
           <button
             disabled={loading || uploading}            
             className="p-3 bg-slate-700 text-white rounded-lg uppercase
