@@ -1,4 +1,4 @@
-import express from "express";
+import express from 'express';
 import mongoose from "mongoose";
 import dotenv from "dotenv";
 import userrouter from "./routes/user.route.js";
